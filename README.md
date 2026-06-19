@@ -128,9 +128,18 @@ Retorna a contagem de pacientes e endereços no formato `{"patients_count": 10, 
 - **`GET` /enderecos** (Listagem com paginação)
   - *Filtros Suportados:* `?search=paulista`, `?state=SP`, `?sort_by=city&sort_dir=desc`, `?per_page=15`
 - **`POST` /enderecos** (Criação)
-  - Enviar corpo JSON com: `street`, `neighborhood`, `city`, `state`, `zip_code`.
+  - **Exemplo de Payload (JSON):**
+    ```json
+    {
+      "street": "Avenida Paulista, 1578",
+      "zip_code": "01310100",
+      "neighborhood": "Bela Vista",
+      "city": "São Paulo",
+      "state": "SP"
+    }
+    ```
 - **`GET` /enderecos/{id}** (Busca individual)
-- **`PUT` /enderecos/{id}** (Atualização Parcial ou Total)
+- **`PUT` /enderecos/{id}** (Atualização Total)
 - **`DELETE` /enderecos/{id}** (Exclusão)
   - *Regra de Negócio:* Retornará `400 Bad Request` se houver pacientes vinculados.
 
@@ -138,8 +147,20 @@ Retorna a contagem de pacientes e endereços no formato `{"patients_count": 10, 
 - **`GET` /pacientes** (Listagem com paginação)
   - *Filtros Suportados:* `?search=15717349025` (Nome, CPF ou CNS), `?gender=M`, `?sort_by=name&sort_dir=asc`
 - **`POST` /pacientes** (Criação)
-  - Enviar corpo JSON com: `name`, `cpf`, `cns`, `birth_date`, `gender`, `phone`, `address_id`
-  - *Regras de Negócio:* Validação matemática de CPF, CNS, formatação de data e unicidade de documentos. Retorna `422` com mensagens de erro se quebrar alguma validação.
+  - *Regras de Negócio:* Validação matemática rigorosa de CPF, CNS, formatação de data e unicidade de documentos.
+  - **Exemplo de Payload Válido (JSON):**
+    ```json
+    {
+      "name": "Maria da Silva",
+      "cpf": "60950633100",
+      "cns": "873691540517552",
+      "birth_date": "1985-03-15",
+      "gender": "F",
+      "phone": "11987654321",
+      "address_id": 1
+    }
+    ```
+    *(Nota: Se receber erro 422 de "já cadastrado", altere 1 dígito válido do CPF/CNS no Postman, pois a API respeita o `unique` rigorosamente).*
 - **`GET` /pacientes/{id}** (Busca individual)
 - **`PUT` /pacientes/{id}** (Atualização)
 - **`DELETE` /pacientes/{id}** (Exclusão)
