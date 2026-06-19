@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CnsRule;
 use App\Rules\CpfRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -16,8 +17,8 @@ class StorePatientRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'cpf' => ['required', 'string', 'unique:patients,cpf', new CpfRule],
-            'cns' => ['required', 'string', 'regex:/^[0-9]{15}$/', 'unique:patients,cns'],
+            'cpf' => ['required', 'string', new CpfRule, 'unique:patients,cpf'],
+            'cns' => ['required', 'string', new CnsRule, 'unique:patients,cns'],
             'birth_date' => ['required', 'date', 'before_or_equal:today'],
             'gender' => ['required', 'in:M,F,O'],
             'phone' => ['nullable', 'string', 'regex:/^[0-9]{10,11}$/'],
@@ -33,7 +34,6 @@ class StorePatientRequest extends FormRequest
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
             'cns.required' => 'O CNS é obrigatório.',
-            'cns.regex' => 'O CNS deve conter exatamente 15 dígitos numéricos.',
             'cns.unique' => 'Este CNS já está cadastrado.',
             'birth_date.required' => 'A data de nascimento é obrigatória.',
             'birth_date.date' => 'A data de nascimento não é válida.',

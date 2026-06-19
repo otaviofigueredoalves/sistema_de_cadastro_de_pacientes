@@ -36,6 +36,7 @@ O projeto foi construído pensando na aderência a boas práticas e escalabilida
 - **Service Layer:** As regras de negócio (RN-01 a RN-09) foram centralizadas nas classes de serviço.
 - **Componentização Avançada:** O frontend utiliza componentes altamente reutilizáveis como `BaseInput` e `BaseTable` para escalar e manter consistência visual (Tailwind CSS).
 - **Global Error Handling & Logs:** Exceções globais em JSON pelo backend e um canal de Log (`daily`) registrando todas as mutações no banco.
+- **Validação Algorítmica Governamental:** O backend implementa rigorosamente os algoritmos matemáticos oficiais (Módulo 11 do Datasus para CNS e algoritmo da Receita Federal para CPF) via *Custom Rules* nativas (`CnsRule`, `CpfRule`), blindando o banco contra números fictícios.
 - **Validações Reactivas:** O frontend conta com máscaras e checagens client-side utilizando `vee-validate`.
 - **Testes Automatizados:** Suíte de Feature Tests no PHPUnit cobrindo os endpoints da API.
 

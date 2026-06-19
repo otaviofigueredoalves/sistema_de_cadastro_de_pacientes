@@ -4,7 +4,7 @@
       {{ label }} <span v-if="required" class="text-red-500">*</span>
     </label>
     
-    <ValidationProvider :name="name" :rules="rules" v-slot="{ errors }">
+    <ValidationProvider mode="eager" :vid="id" :name="name" :rules="rules" v-slot="{ errors }">
       <template v-if="mask">
         <input
           :id="id"

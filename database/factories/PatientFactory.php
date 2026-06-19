@@ -21,7 +21,7 @@ class PatientFactory extends Factory
         return [
             'name' => fake()->name(),
             'cpf' => $this->generateValidCpf(),
-            'cns' => fake()->numerify('###############'),
+            'cns' => $this->generateValidCns(),
             'birth_date' => fake()->dateTimeBetween('-80 years', '-1 day')->format('Y-m-d'),
             'gender' => fake()->randomElement(['M', 'F', 'O']),
             'phone' => fake()->numerify('###########'),
@@ -57,5 +57,33 @@ class PatientFactory extends Factory
         }
 
         return "{$n1}{$n2}{$n3}{$n4}{$n5}{$n6}{$n7}{$n8}{$n9}{$d1}{$d2}";
+    }
+
+    /**
+     * Generate a mathematically valid provisional CNS string.
+     */
+    protected function generateValidCns(): string
+    {
+        $cns = (string) rand(7, 9);
+        for ($i = 0; $i < 13; $i++) {
+            $cns .= rand(0, 9);
+        }
+
+        $soma = 0;
+        for ($i = 0; $i < 14; $i++) {
+            $soma += ((int) $cns[$i]) * (15 - $i);
+        }
+
+        $resto = $soma % 11;
+        $dv = 11 - $resto;
+        if ($dv === 11) {
+            $dv = 0;
+        }
+        if ($dv === 10) {
+            // Se der 10 no provisório, regra manda recalcular, mas pra teste é mais fácil refazer
+            return $this->generateValidCns();
+        }
+
+        return $cns.$dv;
     }
 }

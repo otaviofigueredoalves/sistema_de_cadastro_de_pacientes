@@ -5,8 +5,8 @@
       <router-link to="/enderecos" class="text-blue-600 hover:underline">Voltar</router-link>
     </div>
 
-    <ValidationObserver ref="form" v-slot="{ handleSubmit }">
-      <form @submit.prevent="handleSubmit(onSubmit)" class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 space-y-4">
+    <ValidationObserver ref="form">
+      <form @submit.prevent="onSubmit" class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 space-y-4">
                <!-- CEP -->
         <BaseInput
           id="zip_code"
@@ -123,6 +123,12 @@ export default {
       }
     },
     async onSubmit() {
+      const isValid = await this.$refs.form.validate()
+      if (!isValid) {
+        this.$store.dispatch('notifications/show', { message: 'Por favor, corrija os campos destacados em vermelho.', type: 'warning' })
+        return
+      }
+
       this.saving = true
       
       // Clean payload

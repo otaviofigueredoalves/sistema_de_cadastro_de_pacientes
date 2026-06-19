@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CnsRule;
 use App\Rules\CpfRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdatePatientRequest extends FormRequest
 {
@@ -19,8 +19,8 @@ class UpdatePatientRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'cpf' => ['required', 'string', Rule::unique('patients', 'cpf')->ignore($patientId), new CpfRule],
-            'cns' => ['required', 'string', 'regex:/^[0-9]{15}$/', Rule::unique('patients', 'cns')->ignore($patientId)],
+            'cpf' => ['required', 'string', new CpfRule(), 'unique:patients,cpf,' . $patientId],
+            'cns' => ['required', 'string', new CnsRule(), 'unique:patients,cns,' . $patientId],
             'birth_date' => ['required', 'date', 'before_or_equal:today'],
             'gender' => ['required', 'in:M,F,O'],
             'phone' => ['nullable', 'string', 'regex:/^[0-9]{10,11}$/'],
@@ -35,8 +35,6 @@ class UpdatePatientRequest extends FormRequest
             'name.max' => 'O nome deve ter no máximo 255 caracteres.',
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
-            'cns.required' => 'O CNS é obrigatório.',
-            'cns.regex' => 'O CNS deve conter exatamente 15 dígitos numéricos.',
             'cns.unique' => 'Este CNS já está cadastrado.',
             'birth_date.required' => 'A data de nascimento é obrigatória.',
             'birth_date.date' => 'A data de nascimento não é válida.',
