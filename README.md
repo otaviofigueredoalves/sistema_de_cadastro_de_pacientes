@@ -66,12 +66,20 @@ docker-compose up -d --build
 ```
 > **Nota de Arquitetura:** O container `frontend` é efêmero por design. Ele liga, roda o `npm run build` gerando a pasta `/dist` pronta para a Web, e se desliga automaticamente. O container `nginx` é quem assume e serve as páginas estáticas na porta `8080`.
 
-### 4. Instalar as dependências do Laravel
+### 4. Ajustar permissões de pastas (Solução de Conflitos no Docker)
+Dependendo do seu Sistema Operacional (Windows/WSL ou Linux), o Docker pode enfrentar problemas de `ownership` (permissão de dono) ao tentar escrever arquivos na pasta mapeada. Para garantir que tudo funcione perfeitamente, rode os 2 comandos abaixo para ajustar isso diretamente por dentro do container:
+
+```bash
+docker-compose exec app mkdir -p bootstrap/cache
+docker-compose exec app chmod -R 777 storage bootstrap/cache
+```
+
+### 5. Instalar as dependências do Laravel
 ```bash
 docker-compose exec app composer install
 ```
 
-### 5. Configurar o Banco de Dados e Seeders
+### 6. Configurar o Banco de Dados e Seeders
 Crie a estrutura de tabelas e insira os dados realistas iniciais:
 ```bash
 docker-compose exec app php artisan migrate --seed

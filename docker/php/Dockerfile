@@ -20,5 +20,8 @@ RUN docker-php-ext-install pdo_mysql mbstring pcntl bcmath gd zip
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Fix Git dubious ownership error for mounted volumes
+RUN git config --global --add safe.directory /var/www/html
+
 # Set working directory
 WORKDIR /var/www/html
