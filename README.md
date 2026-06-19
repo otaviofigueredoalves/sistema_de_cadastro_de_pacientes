@@ -8,6 +8,27 @@ Bem-vindo ao Sistema de Cadastro de Pacientes! Esta aplicação web atende a tod
 - **Frontend:** JavaScript, Vue.js 2, Vuex, Vue Router, Tailwind CSS, VeeValidate, Vite
 - **Infraestrutura:** Docker, Docker Compose, Nginx
 
+## 📸 Telas do Projeto
+
+### DASHBOARD
+![Dashboard](screenshots/dashboard.png)
+
+### PACIENTES E ENDEREÇOS
+![Listagem de Pacientes](screenshots/pacientes.png)
+![Listagem de Endereços](screenshots/enderecos.png)
+
+### TESTES AUTOMATIZADOS
+![Testes Automatizados](screenshots/testes.png)
+
+### TESTES POSTMAN
+#### PACIENTES
+![Testes GET PACIENTES](screenshots/get_pacientes.png)
+![Testes POST PACIENTES](screenshots/post_pacientes.png)
+
+### ENDEREÇOS
+![Testes GET ENDERECOS](screenshots/get_enderecos.png)
+![Testes POST ENDERECOS](screenshots/post_enderecos.png)
+
 ## 🛠️ Arquitetura e Diferenciais
 
 O projeto foi construído pensando na aderência a boas práticas e escalabilidade:
