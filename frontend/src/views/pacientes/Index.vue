@@ -44,6 +44,9 @@
         <template #cell-cpf="{ item }">
           {{ formatCpf(item.cpf) }}
         </template>
+        <template #cell-cns="{ item }">
+          {{ formatCns(item.cns) }}
+        </template>
         <template #cell-gender="{ item }">
           {{ formatGender(item.gender) }}
         </template>
@@ -158,6 +161,11 @@ export default {
     formatCpf(cpf) {
       if (!cpf) return ''
       return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4")
+    },
+
+    formatCns(cns) {
+      if (!cns) return ''
+      return cns.replace(/(\d{3})(\d{4})(\d{4})(\d{4})/, "$1 $2 $3 $4")
     },
 
     formatGender(gender) {
