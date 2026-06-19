@@ -33,7 +33,7 @@ class PatientControllerTest extends TestCase
         $payload = [
             'name' => 'Paciente Teste',
             'cpf' => Patient::factory()->make()->cpf,
-            'cns' => '123456789012345',
+            'cns' => Patient::factory()->make()->cns,
             'birth_date' => '1990-01-01',
             'gender' => 'O',
             'phone' => '11999999999',
@@ -54,7 +54,7 @@ class PatientControllerTest extends TestCase
         $payload = [
             'name' => 'Paciente Teste',
             'cpf' => '11111111111',
-            'cns' => '123456789012345',
+            'cns' => Patient::factory()->make()->cns,
             'birth_date' => '1990-01-01',
             'gender' => 'O',
             'address_id' => $address->id,
@@ -75,7 +75,7 @@ class PatientControllerTest extends TestCase
         $payload = [
             'name' => 'Paciente Teste 2',
             'cpf' => $existingPatient->cpf,
-            'cns' => '123456789012345',
+            'cns' => Patient::factory()->make()->cns,
             'birth_date' => '1990-01-01',
             'gender' => 'M',
             'address_id' => $address->id,
@@ -108,7 +108,7 @@ class PatientControllerTest extends TestCase
             ->assertJsonValidationErrors(['cns']);
     }
 
-    public function test_fails_if_cns_is_not_15_digits(): void
+    public function test_fails_if_cns_is_invalid(): void
     {
         // RN-06
         $address = Address::factory()->create();
@@ -116,7 +116,7 @@ class PatientControllerTest extends TestCase
         $payload = [
             'name' => 'Paciente',
             'cpf' => Patient::factory()->make()->cpf,
-            'cns' => '12345', // Inválido
+            'cns' => '111111111111111', // Tamanho 15, mas matematicamente inválido
             'birth_date' => '1990-01-01',
             'gender' => 'M',
             'address_id' => $address->id,
@@ -134,7 +134,7 @@ class PatientControllerTest extends TestCase
         $payload = [
             'name' => 'Paciente Futuro',
             'cpf' => Patient::factory()->make()->cpf,
-            'cns' => '123456789012345',
+            'cns' => Patient::factory()->make()->cns,
             'birth_date' => now()->addDay()->format('Y-m-d'),
             'gender' => 'F',
             'address_id' => $address->id,
@@ -154,7 +154,7 @@ class PatientControllerTest extends TestCase
         $payload = [
             'name' => 'Paciente',
             'cpf' => Patient::factory()->make()->cpf,
-            'cns' => '123456789012345',
+            'cns' => Patient::factory()->make()->cns,
             'birth_date' => '1990-01-01',
             'gender' => 'X', // Inválido
             'address_id' => $address->id,

@@ -5,8 +5,8 @@
       <router-link to="/pacientes" class="text-blue-600 hover:underline">Voltar</router-link>
     </div>
 
-    <ValidationObserver ref="form" v-slot="{ handleSubmit }">
-      <form @submit.prevent="handleSubmit(onSubmit)" class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 space-y-4">
+    <ValidationObserver ref="form">
+      <form @submit.prevent="onSubmit" class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 space-y-4">
         
         <!-- Nome -->
         <BaseInput
@@ -24,7 +24,7 @@
             name="CPF"
             label="CPF"
             v-model="form.cpf"
-            rules="required|length:14"
+            rules="required|cpf"
             mask="###.###.###-##"
           />
 
@@ -34,7 +34,7 @@
             name="CNS"
             label="CNS"
             v-model="form.cns"
-            rules="required|length:18"
+            rules="required|cns"
             mask="### #### #### ####"
           />
         </div>
@@ -47,11 +47,11 @@
             label="Data de Nascimento"
             type="date"
             v-model="form.birth_date"
-            rules="required"
+            rules="required|past_date"
           />
 
           <!-- Gênero -->
-          <ValidationProvider rules="required" name="Gênero" v-slot="{ errors }">
+          <ValidationProvider vid="gender" rules="required" name="Gênero" v-slot="{ errors }">
             <div class="flex flex-col">
               <label class="font-medium text-sm text-gray-500">Gênero</label>
               <select 
@@ -79,7 +79,7 @@
         />
 
         <!-- Endereço -->
-        <ValidationProvider rules="required" name="Endereço" v-slot="{ errors }">
+        <ValidationProvider vid="address_id" rules="required" name="Endereço" v-slot="{ errors }">
           <div class="flex flex-col">
             <label class="font-medium text-sm text-gray-500">Endereço de Vínculo</label>
             <select 
@@ -160,6 +160,12 @@ export default {
       }
     },
     async onSubmit() {
+      const isValid = await this.$refs.form.validate()
+      if (!isValid) {
+        this.$store.dispatch('notifications/show', { message: 'Por favor, corrija os campos destacados em vermelho.', type: 'warning' })
+        return
+      }
+
       this.saving = true
       
       const payload = { ...this.form }
