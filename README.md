@@ -56,6 +56,7 @@ cd sistema_de_cadastro_de_pacientes
 Crie o arquivo `.env` na raiz do projeto com base no arquivo de exemplo e defina suas senhas, caso deseje alterar do padrão:
 ```bash
 cp .env.example .env
+SENHA PADRÃO: secret
 ```
 *(Certifique-se de que o `LOG_CHANNEL=daily` está configurado).*
 
