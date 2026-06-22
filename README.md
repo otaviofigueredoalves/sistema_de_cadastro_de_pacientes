@@ -48,8 +48,8 @@ Você pode executar o projeto de forma extremamente simples com Docker e Docker 
 
 ### 1. Clonar o repositório
 ```bash
-git clone https://github.com/otaviofigueredoalves/sistema_cadastro_de_pacientes.git
-cd sistema_cadastro_de_pacientes
+git clone https://github.com/otaviofigueredoalves/sistema_de_cadastro_de_pacientes.git
+cd sistema_de_cadastro_de_pacientes
 ```
 
 ### 2. Configurar as variáveis de ambiente
