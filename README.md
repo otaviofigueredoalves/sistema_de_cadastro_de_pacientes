@@ -56,9 +56,9 @@ cd sistema_de_cadastro_de_pacientes
 Crie o arquivo `.env` na raiz do projeto com base no arquivo de exemplo e defina suas senhas, caso deseje alterar do padrão:
 ```bash
 cp .env.example .env
-SENHA PADRÃO: secret
 ```
 *(Certifique-se de que o `LOG_CHANNEL=daily` está configurado).*
+*(SENHA PADRÃO: secret)*
 
 ### 3. Subir os Containers Docker
 Execute o comando abaixo para realizar o build das imagens (Backend e Node) e subir os containers em background.
