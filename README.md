@@ -48,8 +48,8 @@ Você pode executar o projeto de forma extremamente simples com Docker e Docker 
 
 ### 1. Clonar o repositório
 ```bash
-git clone https://github.com/otaviofigueredoalves/sistema_de_cadastro_de_pacientes.git
-cd sistema_de_cadastro_de_pacientes
+git clone https://github.com/SEU-USUARIO/sistema-cadastro-de-pacientes.git
+cd sistema-cadastro-de-pacientes
 ```
 
 ### 2. Configurar as variáveis de ambiente
@@ -58,7 +58,6 @@ Crie o arquivo `.env` na raiz do projeto com base no arquivo de exemplo e defina
 cp .env.example .env
 ```
 *(Certifique-se de que o `LOG_CHANNEL=daily` está configurado).*
-*(SENHA PADRÃO: secret)*
 
 ### 3. Subir os Containers Docker
 Execute o comando abaixo para realizar o build das imagens (Backend e Node) e subir os containers em background.
@@ -80,7 +79,14 @@ docker-compose exec app chmod -R 777 storage bootstrap/cache
 docker-compose exec app composer install
 ```
 
-### 6. Configurar o Banco de Dados e Seeders
+### 6. Gerar a Chave da Aplicação (APP_KEY)
+```bash
+docker-compose exec app php artisan key:generate
+```
+
+### 7. Configurar o Banco de Dados e Seeders
+> **⚠️ ATENÇÃO (Usuários de Windows/WSL e Mac):** O Docker não roda nativamente nesses sistemas, o que gera um leve gargalo de I/O de disco. Ao rodar o `docker-compose up` pela primeira vez, o MySQL pode levar de **15 a 30 segundos** para inicializar internamente. Aguarde esse tempo antes de rodar o comando abaixo, caso contrário você receberá um erro de *Connection refused (Erro 2002)*. Usuários de Linux Nativo não sofrem com isso.
+
 Crie a estrutura de tabelas e insira os dados realistas iniciais:
 ```bash
 docker-compose exec app php artisan migrate --seed
