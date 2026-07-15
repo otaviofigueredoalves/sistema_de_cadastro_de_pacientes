@@ -1,6 +1,6 @@
 # Sistema de Cadastro de Pacientes — Módulo de Saúde
 
-Bem-vindo ao Sistema de Cadastro de Pacientes! Esta aplicação web atende a todos os requisitos do Desafio para Desenvolvedor Full Stack, construída com **Laravel 13** no backend e **Vue.js 2** na Single Page Application (SPA).
+A aplicação simula um módulo de gestão de pacientes utilizado em unidades de saúde. O sistema implementa API REST no back e SPA no front, com ambiente docker funcional.
 
 ## 🚀 Tecnologias
 
